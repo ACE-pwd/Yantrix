@@ -1,30 +1,51 @@
 {
   "name": "yantrix",
   "version": "1.0.0",
-  "description": "Backend service for Yantrix, built with Node.js, TypeScript, Express, Prisma, and PostgreSQL.",
+  "description": "Yantrix CLI and full-stack development environment for the Yantrix space-tech platform.",
+  "private": true,
   "main": "index.js",
-
-    
-  "scripts": {
-    "docker:up": "docker compose up -d --build",
-    "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f",
-    "docker:logs:frontend": "docker compose logs -f frontend",
-    "docker:logs:backend": "docker compose logs -f backend",
-    "docker:restart": "docker compose restart",
-    "docker:ps": "docker compose ps"
+  "type": "commonjs",
+  "bin": {
+    "orbit": "./scripts/orbit.js"
   },
-
+  "scripts": {
+    "orbit": "node scripts/orbit.js",
+    "dev": "npx orbit start",
+    "start": "npx orbit start",
+    "stop": "npx orbit stop",
+    "logs": "npx orbit logs",
+    "ps": "npx orbit status",
+    "restart": "npx orbit restart",
+    "reset": "npx orbit reset",
+    "migrate": "npx orbit migrate",
+    "migrate:deploy": "npx orbit migrate:deploy",
+    "migrate:status": "npx orbit migrate:status",
+    "generate": "npx orbit generate",
+    "studio": "npx orbit studio",
+    "db": "npx orbit db"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KatalKavya96/Yantrix.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "keywords": [
+    "yantrix",
+    "space-tech",
+    "docker",
+    "cli",
+    "monorepo",
+    "react",
+    "express",
+    "postgresql",
+    "prisma"
+  ],
+  "author": "Kavya Katal",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/KatalKavya96/Yantrix/issues"
   },
-  "homepage": "https://github.com/KatalKavya96/Yantrix#readme"
+  "homepage": "https://github.com/KatalKavya96/Yantrix#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
