@@ -1,147 +1,312 @@
 # Yantrix
 
-Backend service for Yantrix, built with Node.js, TypeScript, Express, Prisma, and PostgreSQL.
+Yantrix is a next-generation space-tech collaboration platform — built specifically for **space datasets, satellite challenges, AI/ML experimentation, research collaboration, and engineering innovation**.
 
-## Overview
+This repository contains the full-stack Yantrix development environment:
 
-Yantrix is structured as a backend-first service with a Prisma-managed PostgreSQL database and Docker-based local environment. This repository currently contains the backend application in the `backend` directory.
+- **Frontend** → React + Vite + TypeScript  
+- **Backend** → Node.js + TypeScript + Express  
+- **Database** → PostgreSQL + Prisma ORM  
+- **DevOps** → Docker + Docker Compose  
 
-## Tech Stack
+---
 
-- **Runtime:** Node.js
-- **Language:** TypeScript
-- **Framework:** Express
-- **ORM:** Prisma
-- **Database:** PostgreSQL 16
-- **Containerization:** Docker + Docker Compose
+# Vision
 
-## Repository Structure
+Yantrix aims to become the central ecosystem for:
 
-```text
-Yantrix/
-├── backend/
-│   ├── prisma/
-│   │   └── schema.prisma
-│   ├── src/
-│   │   └── index.ts
-│   ├── docker-compose.yml
-│   ├── Dockerfile.dev
-│   ├── package.json
-│   └── .env.example
-└── Readme.md
+- Space datasets
+- Satellite problem solving
+- Orbital simulations
+- Space AI models
+- Research paper publishing
+- Space developer collaboration
+- Open-source space tools
+- Real-world aerospace innovation
+
+Think:
+
+```txt
+Kaggle + Hugging Face + GitHub + ResearchGate
+For Space Technology
 ```
 
-## Prerequisites
+---
 
-Before running the project, ensure you have:
+# Current Tech Stack
 
-- Node.js 18 or later
-- npm
-- Docker Desktop (or Docker Engine + Compose)
+## Frontend
 
-## Quick Start
+- React
+- TypeScript
+- Vite
 
-### 1) Clone and move into the backend
+## Backend
 
-```bash
-git clone <your-repository-url>
-cd Yantrix/backend
-```
-
-### 2) Install dependencies
-
-```bash
-npm install
-```
-
-### 3) Set up environment variables
-
-Create a `.env` file in `backend/` using `.env.example` as a baseline:
-
-```env
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/space_platform?schema=public
-PORT=8000
-NODE_ENV=development
-JWT_SECRET=your_dev_secret
-JWT_REFRESH_SECRET=your_dev_refresh_secret
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-```
-
-### 4) Start services with Docker (recommended)
-
-```bash
-docker compose up --build
-```
-
-This starts:
-
-- PostgreSQL on `localhost:5432`
-- Backend on `localhost:8000`
-
-## Running Without Docker
-
-If you prefer running locally:
-
-```bash
-cd backend
-npx prisma generate
-npm run dev
-```
-
-## Available Commands
-
-From `backend/package.json`:
-
-- `npm run dev` - Build TypeScript and run the backend
-- `npx prisma generate` - Generate Prisma client
-- `npx prisma migrate dev --name <migration_name>` - Create and apply a migration
-- `npx prisma studio` - Open Prisma Studio
+- Node.js
+- Express.js
+- TypeScript
+- Prisma ORM
+- JWT Authentication
 
 ## Database
 
-Prisma schema is defined in `backend/prisma/schema.prisma`.
+- PostgreSQL 16
 
-Current entities:
+## Infrastructure
 
-- `User`
-  - `id`, `name`, `email`, `phone`, `githubId`, `password`
-  - `createdAt`, `updatedAt`
+- Docker
+- Docker Compose
 
-## Configuration
+---
 
-The Docker Compose setup uses:
+# Repository Structure
 
-- Database container: `space_platform_postgres`
-- Backend container: `space_platform_backend`
-- Internal database host for backend container: `postgres`
+```text
+Yantrix/
+├── frontend/
+├── backend/
+├── docker-compose.yml
+├── package.json
+├── .env.example
+├── README.md
+└── .gitignore
+```
 
-## Development Notes
+---
 
-- Keep `DATABASE_URL` aligned with your run mode:
-  - Dockerized backend: host should be `postgres`
-  - Local backend process: host should be `localhost`
-- Do not commit real credentials or production secrets.
-- Keep `.env` in `.gitignore`.
+# Features
 
-## Security
+## Current
 
-- Replace placeholder JWT secrets before deployment.
-- Use strong, unique database credentials in non-local environments.
-- Configure environment variables through a secure secret manager in production.
+- Full Dockerized development environment
+- Frontend + Backend + Database
+- Login / Signup APIs
+- JWT Authentication
+- Prisma ORM setup
+- PostgreSQL running in Docker
 
-## Project Status
+## Planned
 
-The repository is in active development. The current entry point is `backend/src/index.ts`, and API routes are expected to be expanded in upcoming iterations.
+- Space dataset publishing
+- Dataset versioning
+- Research paper hub
+- Satellite challenge system
+- AI model sharing
+- Team collaboration
+- Public user profiles
 
-## Contributing
+---
 
-1. Create a feature branch from `main`.
-2. Make focused, atomic changes.
-3. Verify changes locally.
-4. Open a pull request with context and test steps.
+# Prerequisites
 
-## License
+- Node.js 18+
+- npm
+- Docker Desktop
 
-Add your preferred license here (for example, MIT).
+Verify:
+
+```bash
+node -v
+npm -v
+docker -v
+docker compose version
+```
+
+---
+
+# Environment Setup
+
+Create root `.env` file:
+
+```env
+DATABASE_URL="postgresql://postgres:postgres@postgres:5432/space_platform?schema=public"
+PORT=8000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+CORS_ORIGIN=http://localhost:5173
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+JWT_SECRET=your_secret_key
+ACCESS_TOKEN_EXPIRY=15m
+REFRESH_TOKEN_EXPIRY=7d
+
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+---
+
+# Quick Start
+
+## Clone
+
+```bash
+git clone <repo-url>
+cd Yantrix
+```
+
+## Run Full Stack
+
+```bash
+npm run docker:up
+```
+
+or
+
+```bash
+docker compose up -d --build
+```
+
+---
+
+# URLs
+
+Frontend:
+
+```txt
+http://localhost:5173
+```
+
+Backend:
+
+```txt
+http://localhost:8000
+```
+
+API:
+
+```txt
+http://localhost:8000/api
+```
+
+Database:
+
+```txt
+localhost:5432
+```
+
+---
+
+# Scripts
+
+```bash
+npm run docker:up
+npm run docker:down
+npm run docker:logs
+npm run docker:restart
+npm run docker:ps
+```
+
+---
+
+# Prisma Commands
+
+```bash
+docker compose exec backend npx prisma migrate dev
+docker compose exec backend npx prisma migrate deploy
+docker compose exec backend npx prisma generate
+docker compose exec backend npx prisma studio
+```
+
+---
+
+# Auth APIs
+
+```http
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+GET  /api/auth/me
+```
+
+---
+
+# Development Workflow
+
+## Frontend
+
+Edit:
+
+```txt
+frontend/src/
+```
+
+## Backend
+
+Edit:
+
+```txt
+backend/src/
+```
+
+## Prisma
+
+Edit:
+
+```txt
+backend/prisma/schema.prisma
+```
+
+Then run migration.
+
+---
+
+# Troubleshooting
+
+## Backend logs
+
+```bash
+docker compose logs -f backend
+```
+
+## Missing tables
+
+```bash
+docker compose exec backend npx prisma migrate deploy
+```
+
+## Reset DB
+
+```bash
+docker compose down -v
+docker compose up -d --build
+docker compose exec backend npx prisma migrate deploy
+```
+
+---
+
+# Security
+
+Never commit:
+
+- real `.env`
+- production secrets
+- database passwords
+- JWT secrets
+
+Use `.env.example`.
+
+---
+
+# Contributing
+
+```bash
+git checkout -b feature/your-feature
+```
+
+Make clean commits and open PR.
+
+---
+
+# License
+
+MIT
+
+---
+
+# Built With Ambition
+
+Yantrix is being built for the future of space engineering, AI, and innovation.
