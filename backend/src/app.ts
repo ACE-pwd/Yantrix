@@ -8,6 +8,7 @@ import { errorHandler } from "./presentation/middleware/error.middleware.js";
 import { AppResponse } from "./shared/response/AppResponse.js";
 import authRoutes from "./presentation/routes/auth.routes.js";
 import userRoutes from "./presentation/routes/user.routes.js";
+import researchRoutes from "./presentation/routes/research.routes.js";
 
 export default class App {
   public app: Application;
@@ -28,7 +29,6 @@ export default class App {
     };
 
     this.app.use(cors(corsOptions));
-
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
@@ -50,6 +50,7 @@ export default class App {
 
     this.app.use("/api/auth", authRoutes);
     this.app.use("/api/user", userRoutes);
+    this.app.use("/api/research", researchRoutes);
 
     this.app.use((_req: Request, res: Response) => {
       res.status(404).json(new AppResponse(404, null, "No such Route found"));
