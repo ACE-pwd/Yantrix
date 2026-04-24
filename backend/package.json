@@ -7,7 +7,16 @@
     "dev": "tsc && node dist/server.js",
     "build": "tsc",
     "start": "node dist/server.js",
-    "check": "tsc --noEmit"
+
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f backend",
+    "docker:restart": "docker compose restart backend",
+
+    "prisma:migrate": "docker compose exec backend npx prisma migrate dev",
+    "prisma:status": "docker compose exec backend npx prisma migrate status",
+    "prisma:generate": "docker compose exec backend npx prisma generate",
+    "prisma:studio": "docker compose exec backend npx prisma studio"
   },
   "keywords": [],
   "author": "",
