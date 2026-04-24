@@ -1,188 +1,211 @@
-- Fork repo
-- Create branch
-- Use docker setup
-- Follow code style
-- Open PR
+# Contributing to Yantrix
 
-# Docker Documentation
+Thank you for contributing to Yantrix.
 
-## Start full project
+Yantrix is a space-tech collaboration platform focused on datasets, AI/ML, satellite challenges, research, and engineering innovation.
+
+---
+
+# Contribution Workflow
+
+## 1. Fork Repository
+
+Fork the Yantrix repository to your GitHub account.
+
+## 2. Clone Your Fork
 
 ```bash
-npm run docker:up
+git clone <your-fork-url>
+cd Yantrix
 ```
 
-or directly:
+## 3. Install Root Dependencies
+
+```bash
+npm install
+```
+
+## 4. Setup Environment
+
+```bash
+cp .env.example .env
+```
+
+Update values if needed.
+
+## 5. Start Project
+
+Recommended:
+
+```bash
+npx orbit start
+```
+
+This starts frontend, backend, database, opens browser, and launches Orbit shell.
+
+## 6. Create Branch
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+## 7. Make Changes
+
+Please follow:
+
+- Existing folder structure
+- Existing code style
+- Meaningful naming conventions
+- Clean commits
+
+## 8. Test Changes
+
+Use Orbit or Docker commands.
+
+## 9. Commit
+
+```bash
+git add .
+git commit -m "feat: your change summary"
+```
+
+## 10. Push
+
+```bash
+git push origin feature/your-feature-name
+```
+
+## 11. Open Pull Request
+
+Include:
+
+- What changed
+- Why changed
+- Screenshots (if UI)
+- Test steps
+
+---
+
+# Orbit CLI Commands
+
+## Core
+
+```bash
+npx orbit start
+npx orbit stop
+npx orbit restart
+npx orbit status
+npx orbit logs
+```
+
+## Logs
+
+```bash
+npx orbit logs backend
+npx orbit logs frontend
+npx orbit logs postgres
+```
+
+## Prisma / Database
+
+```bash
+npx orbit migrate
+npx orbit migrate init
+npx orbit migrate:deploy
+npx orbit studio
+npx orbit db
+npx orbit reset
+```
+
+## Shell Access
+
+```bash
+npx orbit shell backend
+npx orbit shell frontend
+npx orbit shell db
+```
+
+---
+
+# Docker Manual Commands
+
+## Start Full Project
 
 ```bash
 docker compose up -d --build
 ```
 
-## Stop project
-
-```bash
-npm run docker:down
-```
-
-or:
+## Stop Project
 
 ```bash
 docker compose down
 ```
 
-## View running containers
+## View Running Containers
 
 ```bash
 docker compose ps
 ```
 
-## View all logs
+## Logs
 
 ```bash
 docker compose logs -f
-```
-
-## View backend logs only
-
-```bash
 docker compose logs -f backend
-```
-
-## View frontend logs only
-
-```bash
 docker compose logs -f frontend
-```
-
-## View database logs only
-
-```bash
 docker compose logs -f postgres
 ```
 
-## Restart all services
+## Restart
 
 ```bash
 docker compose restart
-```
-
-## Restart backend only
-
-```bash
 docker compose restart backend
-```
-
-## Restart frontend only
-
-```bash
 docker compose restart frontend
 ```
 
-## Rebuild everything from scratch
+---
 
-```bash
-docker compose down
-docker compose up --build
-```
-
-## Rebuild without cache
-
-```bash
-docker compose build --no-cache
-docker compose up
-```
-
-## Run Prisma migration
+# Prisma Commands
 
 ```bash
 docker compose exec backend npx prisma migrate dev
-```
-
-## Create a named Prisma migration
-
-```bash
 docker compose exec backend npx prisma migrate dev --name migration_name
-```
-
-## Apply existing migrations
-
-```bash
 docker compose exec backend npx prisma migrate deploy
-```
-
-## Check migration status
-
-```bash
 docker compose exec backend npx prisma migrate status
-```
-
-## Generate Prisma client
-
-```bash
 docker compose exec backend npx prisma generate
-```
-
-## Open Prisma Studio
-
-```bash
 docker compose exec backend npx prisma studio
 ```
 
-## Enter backend container shell
+---
+
+# Shell Access
 
 ```bash
 docker compose exec backend sh
-```
-
-## Enter frontend container shell
-
-```bash
 docker compose exec frontend sh
-```
-
-## Enter Postgres container shell
-
-```bash
 docker compose exec postgres sh
 ```
 
-## Open Postgres CLI
+---
+
+# PostgreSQL CLI
 
 ```bash
 docker compose exec postgres psql -U postgres -d space_platform
 ```
 
-## List database tables
+---
 
-```bash
-docker compose exec postgres psql -U postgres -d space_platform -c "\dt"
-```
+# Testing
 
-## Check backend env variable
-
-```bash
-docker compose exec backend printenv DATABASE_URL
-```
-
-## Check Cloudinary env variable
-
-```bash
-docker compose exec backend printenv CLOUDINARY_CLOUD_NAME
-```
-
-## Check frontend env variable
-
-```bash
-docker compose exec frontend printenv VITE_API_BASE_URL
-```
-
-## Test backend health route
+## Backend Health
 
 ```bash
 curl http://localhost:8000/health
 ```
 
-## Test frontend
+## Frontend
 
 Open:
 
@@ -190,31 +213,39 @@ Open:
 http://localhost:5173
 ```
 
-## Test backend API
+## API
 
 ```bash
 curl http://localhost:8000/api
 ```
 
-## Test signup API
+---
+
+# Common Fixes
+
+## Missing Tables
 
 ```bash
-curl -X POST http://localhost:8000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"test@example.com","phone":"9999999999","password":"Test@123"}'
+npx orbit migrate:deploy
 ```
 
-## Test login API
+or
 
 ```bash
-curl -X POST http://localhost:8000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"Test@123"}'
+docker compose exec backend npx prisma migrate deploy
 ```
 
-## Reset database completely
+## Invalid Token
 
-Warning: deletes local Docker database data.
+Clear browser local storage and login again.
+
+## Reset Full Database
+
+```bash
+npx orbit reset
+```
+
+or
 
 ```bash
 docker compose down -v
@@ -222,108 +253,42 @@ docker compose up -d --build
 docker compose exec backend npx prisma migrate deploy
 ```
 
-## Remove stopped containers/images/cache
-
-```bash
-docker system prune
-```
-
-## Remove unused build cache
-
-```bash
-docker builder prune
-```
-
-## Full cleanup
-
-Warning: removes unused containers, images, networks, and cache.
-
-```bash
-docker system prune -a
-```
-
-## Diagnose container status
-
-```bash
-docker compose ps
-docker inspect space_platform_backend
-docker inspect space_platform_frontend
-docker inspect space_platform_postgres
-```
-
-## Check if backend sees latest local code
-
-```bash
-docker compose exec backend ls /app
-docker compose exec backend cat /app/package.json
-```
-
-## Check if frontend sees latest local code
-
-```bash
-docker compose exec frontend ls /app
-docker compose exec frontend cat /app/package.json
-```
-
-## Install new backend package inside container
-
-```bash
-docker compose exec backend npm install package-name
-```
-
-## Install new frontend package inside container
-
-```bash
-docker compose exec frontend npm install package-name
-```
-
-## Rebuild after package changes
-
-```bash
-docker compose up -d --build
-```
-
-## Run backend tests
-
-```bash
-docker compose exec backend npm test
-```
-
-## Run frontend tests
-
-```bash
-docker compose exec frontend npm test
-```
-
-## Common fix: backend says table does not exist
-
-```bash
-docker compose exec backend npx prisma migrate deploy
-docker compose restart backend
-```
-
-## Common fix: invalid token
-
-Clear browser local storage, then signup/login again.
-
-## Common fix: env not loading
-
-```bash
-docker compose exec backend printenv
-docker compose exec frontend printenv
-```
-
-## Common fix: containers stuck
+## Containers Stuck
 
 ```bash
 docker compose down
 docker compose up -d --build
 ```
 
-## Common fix: database broken locally
+---
 
-```bash
-docker compose down -v
-docker compose up -d --build
-docker compose exec backend npx prisma migrate deploy
+# Code Expectations
+
+Please aim for:
+
+- Clean readable code
+- Small focused PRs
+- Reusable components
+- Consistent naming
+- No unnecessary package additions
+
+---
+
+# Labels You May See
+
+```txt
+frontend
+backend
+database
+docker
+enhancement
+bug
+good first issue
+help wanted
 ```
+
+---
+
+# Thank You
+
+Every contribution helps build Yantrix into a serious platform for future space engineering and innovation.
